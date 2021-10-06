@@ -10,6 +10,7 @@
 
 // here we are looking for the userName value in the web request which called this page
     String name = request.getParameter("userName");
+    String address = request.getParameter("address");
 
 %>
 <!DOCTYPE html>
@@ -22,6 +23,7 @@
         <h1>JSP Example 2: Form Request Examples</h1>
 
         Hello I think your name is <%=name%>
+        Your address is <%=address%>
 
         <!-- starting the href with ./ means you are referring relative to the root of this page -->
 
@@ -37,7 +39,13 @@
             <!-- here we are pre filling the value with the name variable -->
             <p>user name <input type="text" name="userName" value="<%=name%>"></p>
             <button type="submit" >add name using POST</button>
-        </form> 
+        </form>
+
+        <br>
+        <form action="./jspexample2.jsp" method="get">
+            <p>Address <input type="text" name="address" value=""></p>
+            <button type="submit"> Add Address using GET</button>
+        </form>
     </body>
 </html>
 
