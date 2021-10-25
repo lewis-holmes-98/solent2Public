@@ -26,9 +26,12 @@ import solent.ac.uk.ood.examples.cardcheck.CardValidationResult;
 import solent.ac.uk.ood.examples.cardcheck.RegexCardValidator;
 
 /**
- * To make the ReST interface easier to program. All of the replies are contained in ReplyMessage classes but only the fields indicated are populated with each
- * reply. All replies will contain a code and a debug message. Possible replies are: List<String> replyMessage.getStringList() AnimalList
- * replyMessage.getAnimalList() int replyMessage.getCode() replyMessage.getDebugMessage(); * @author cgallen
+ * To make the ReST interface easier to program. All of the replies are
+ * contained in ReplyMessage classes but only the fields indicated are populated
+ * with each reply. All replies will contain a code and a debug message.
+ * Possible replies are: List<String> replyMessage.getStringList() AnimalList
+ * replyMessage.getAnimalList() int replyMessage.getCode()
+ * replyMessage.getDebugMessage(); * @author cgallen
  */
 @Path("/api-v1")
 public class RestService {
@@ -53,7 +56,8 @@ public class RestService {
 
     /**
      * http://localhost:8080/creditcardchecker-web/rest/api-v1/validateCard?getCardNo=4444444444444448
-     * @return 
+     *
+     * @return
      */
     @GET
     @Path("/validateCard")
@@ -82,20 +86,27 @@ public class RestService {
     }
 
     /**
-     * POST http://localhost:8080/creditcardchecker-web/rest/api-v1/validateCard payload 
-     * { "name" : "test user1", "endDate" : "11/21", "cardnumber" :
+     * POST http://localhost:8080/creditcardchecker-web/rest/api-v1/validateCard
+     * payload { "name" : "test user1", "endDate" : "11/21", "cardnumber" :
      * "5133880000000012", "cvv" : "123", "issueNumber" : "01" }
      */
     @POST
     @Path("/validateCard")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postValidateFullCard(CreditCard creditCard) {
+    public Response postValidateFullCard(@QueryParam("CreditCard") String creditCard) {
         try {
-            LOG.debug("/validateCard called creditCArd:" + creditCard);
-
-            throw new UnsupportedOperationException("post /validateCard NOT IMPLEMENTED - TODO IMPLEMENT THIS METHOD");
-
+            LOG.debug("/validateCard called creditCrd:" + creditCard);
+            ReplyMessage replyMessage = new ReplyMessage();
+            CardValidationResult result = RegexCardValidator.isValid(creditCard);
+            replyMessage.setCardValidationResult(result);
+            if (result.isValid()) {
+                replyMessage.setCode(Response.Status.OK.getStatusCode());
+                return Response.status(Response.Status.OK).entity(replyMessage).build();
+            } else {
+                replyMessage.setCode(Response.Status.BAD_REQUEST.getStatusCode());
+                return Response.status(Response.Status.BAD_REQUEST).entity(replyMessage).build();
+            }
         } catch (Exception ex) {
             LOG.error("error calling POST /validateCard ", ex);
             ReplyMessage replyMessage = new ReplyMessage();

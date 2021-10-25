@@ -9,16 +9,16 @@
 <%@ page import="solent.ac.uk.ood.examples.cardcheck.RegexCardValidator" %>
 
 <%
-    // String creditcardno = request.getParameter("creditcardno");
+    String creditcardno = request.getParameter("creditcardno");
     
-    String number = request.getParameter("cardNo");
+    // String number = request.getParameter("cardNo");
     // TODO CREATE LOGIC TO CHECK A CARD HERE
     // TIP - LOOK AT THE CODE IN TestRegexCardValidator.java
     
-    CardValidationResult result = RegexCardValidator.isValid(number);
+    CardValidationResult result = RegexCardValidator.isValid(creditcardno);
     
 %>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -30,11 +30,11 @@
         TODO CREATE A PAGE WHICH CHECKS CARD HERE
 
         <form action="./checkcard.jsp" method="post">
-            <input type="text" name="cardNo" value="<%=number%>">
+            <input type="text" name="cardNo" value="<%=creditcardno%>">
             <input type="hidden" name="action" value="checkCard">
             <button type="submit"> Check Card </button>
         </form>
-
+        
         <% if (result.isValid()) {%>
         <p>"<%= result.getCardNo()%>" is a valid card number issued by  <%= result.getCardType()%> </p>
         <%
