@@ -29,8 +29,9 @@ public class PropertiesDao {
     private Properties properties = new Properties();
 
     public PropertiesDao(String propertiesFileLocation) {
-        try {
+        try (InputStream input = new FileInputStream("C:/developer/gitrepos/solent2Public/myPracticeCourseWork/week5/simplePropertiesDaoWebApp/src/main/resources/defaultConfig.properties")) {
             propertiesFile = new File(propertiesFileLocation);
+            LOG.info("Found defualt properties file!");
             if (!propertiesFile.exists()) {
                 LOG.info("properties file does not exist: creating new file: " + propertiesFile.getAbsolutePath());
                 propertiesFile.getParentFile().mkdirs();
@@ -38,6 +39,7 @@ public class PropertiesDao {
                 saveProperties();
             }
             loadProperties();
+            properties.load(input);
         } catch (IOException ex) {
             LOG.error("cannot load properties", ex);
         }

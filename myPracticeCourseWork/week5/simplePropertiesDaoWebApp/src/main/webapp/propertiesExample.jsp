@@ -13,6 +13,7 @@
     String url = propertiesDao.getProperty("org.solent.ood.simplepropertiesdaowebapp.url");
     String username = propertiesDao.getProperty("org.solent.ood.simplepropertiesdaowebapp.username");
     String password = propertiesDao.getProperty("org.solent.ood.simplepropertiesdaowebapp.password");
+    String bankCard = propertiesDao.getProperty("org.solent.ood.simplepropertiesdaowebapp.bankCard");
     String message = "";
     
     String action = (String) request.getParameter("action");
@@ -21,10 +22,12 @@
         url = (String) request.getParameter("url");
         username = (String) request.getParameter("username");
         password = (String) request.getParameter("password");
+        bankCard = (String) request.getParameter("bankCard");
 
         propertiesDao.setProperty("org.solent.ood.simplepropertiesdaowebapp.url", url);
         propertiesDao.setProperty("org.solent.ood.simplepropertiesdaowebapp.username", username);
         propertiesDao.setProperty("org.solent.ood.simplepropertiesdaowebapp.password", password);
+        propertiesDao.setProperty("org.solent.ood.simplepropertiesdaowebapp.bankCard", bankCard);
 
     }
 
@@ -42,6 +45,7 @@
             <p>URL Property <input type="text" name="url" value="<%=url%>"></p>
             <p>Username Property <input type="text" name="username" value="<%=username%>"></p>
             <p>Password Property <input type="text" name="password" value="<%=password%>"></p>
+            <p>bankCard Property <input type="text" name="bankCard" value="<%=bankCard%>"></p>
             <input type="hidden" name="action" value="updateProperties">
 
             <button class="btn" type="submit" >Update Properties</button>
