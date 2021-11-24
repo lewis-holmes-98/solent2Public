@@ -12,7 +12,7 @@
 <%@ page import="org.solent.com504.oodd.cart.web.WebObjectFactory"%>
 <%
 
-    String message="";
+    String message = "";
 
     ShoppingService shoppingService = WebObjectFactory.getShoppingService();
 
@@ -25,18 +25,19 @@
     String action = (String) request.getParameter("action");
     String itemName = (String) request.getParameter("itemName");
     String itemUuid = (String) request.getParameter("itemUUID");
+    String price = (String) request.getParameter("price");
 
     if ("addItemToCart".equals(action)) {
-        message = "adding "+itemName + " to cart";
+        message = "adding " + itemName + " to cart";
         ShoppingItem shoppingItem = shoppingService.getNewItemByName(itemName);
-        message = "adding "+itemName + " to cart : "+shoppingItem;
+        message = "adding " + itemName + " to cart : " + shoppingItem;
         shoppingCart.addItemToCart(shoppingItem);
     }
     if ("removeItemFromCart".equals(action)) {
-        message = "removing "+itemName + " from cart";
+        message = "removing " + itemName + " from cart";
         shoppingCart.removeItemFromCart(itemUuid);
     } else {
-        message = "action="+action;
+        message = "action=" + action;
     }
 
 %>
@@ -100,9 +101,13 @@
                     </form> 
                 </td>
             </tr>
+
             <% }%>
-
+            <tr>
+                <td>TOTAL</td>
+                <td><%=shoppingCart.getTotal()%></td>
+            </tr>
         </table>
-
+        
     </body>
 </html>
